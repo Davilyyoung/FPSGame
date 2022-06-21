@@ -79,7 +79,6 @@ public:
 	float OldHorizontalRecoilAmount;//上一个点
 	float HorizontalRecoilAmount;//减的值
 	
-	
 	//步枪相关
 	void FireWeaponPrimary();
 	void StopFirePrimary();
@@ -95,17 +94,15 @@ public:
 	//手枪相关
 	//狙击枪相关
 	
-	
 	//子弹射击相关
 	void DemagePlayer(EPhysicalSurface Surface, AActor* DamagedActor,FVector& HitFromDirection,FHitResult& HitInfo);//伤害玩家
 
 	UFUNCTION()
 	void OnHit(AActor* DamagedActor, float Damage, class AController* InstigatedBy, FVector HitLocation, class UPrimitiveComponent* FHitComponent, FName BoneName, FVector ShotFromDirection, const class UDamageType* DamageType, AActor* DamageCauser);
 
+	//角色生命值
 	float Health;
 
-
-	
 
 #pragma endregion
 
@@ -120,9 +117,7 @@ public:
 	//蓝图实现持枪动作更新
 	UFUNCTION(BlueprintImplementableEvent)
 	void UpdateFPArmsBlendPose(int32 NewIndex);
-	
-	
-	
+
 private:
 	//现在使用的枪是那把枪
 	UPROPERTY(EditAnywhere, meta = (AllowPrivateAccess = "true"),Replicated)//Test用
@@ -218,7 +213,6 @@ public:
 
 	UFUNCTION(Client,Reliable,WithValidation)
 	void ClientReload();
-
 	
 	//客户端后坐力方法
 	UFUNCTION(Client,Reliable,WithValidation)

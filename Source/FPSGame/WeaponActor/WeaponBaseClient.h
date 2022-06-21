@@ -26,7 +26,6 @@ public:
 	//这里只给一个方法 留给蓝图来实现 要去播放枪体动画 在蓝图中可以直接拖 C++中需要加载 很麻烦
 	UFUNCTION(BlueprintImplementableEvent,Category="FPGunAnimation")
 	void PlayReloadAnimation();
-
 	
 	UPROPERTY(EditAnywhere)
 	UAnimMontage* ClientArmsFireAnimMontage;
@@ -43,11 +42,9 @@ public:
 	UPROPERTY(EditAnywhere)
 	TSubclassOf<UCameraShakeBase> CameraShakeClass;
 
-	//混合的动画是那个数字
+	//混合的动画是那个(数字)
 	UPROPERTY(EditAnywhere)
 	int32 FPArmsBlendPose;
-
-	
 	
 	void DisplayWeaponEffect();
 };

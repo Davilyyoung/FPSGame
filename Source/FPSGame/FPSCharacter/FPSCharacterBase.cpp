@@ -382,9 +382,9 @@ void AFPSCharacterBase::ClientFire_Implementation()
 		//播放射击声音 特效
 		CurrentClintWeapon->DisplayWeaponEffect();
 		//应用屏幕抖动
-		FPSPlayerController->PlayerCameraShake(CurrentClintWeapon->CameraShakeClass);
+		FPSPlayerController->PlayerCameraShake(CurrentClintWeapon->CameraShakeClass);//ok
 		//播放十字线扩散动画
-		FPSPlayerController->DoCrosshairRecoil();
+		FPSPlayerController->DoCrosshairRecoil();//ok
 		
 	}
 
@@ -510,6 +510,11 @@ void AFPSCharacterBase::InputFirePressed()
 				FireWeaponPrimary();
 			}
 		break;
+		case EWeaponType::M4A1:
+			{
+				FireWeaponPrimary();
+			}
+		break;
 		case EWeaponType::DesertEagle:
 			{
 				FireWeaponPrimary();
@@ -525,6 +530,11 @@ void AFPSCharacterBase::InputFireReliased()
 	switch (ActiveWeapon)
 	{
 		case EWeaponType::AK47:
+			{
+				StopFirePrimary();
+			}
+		break;
+		case EWeaponType::M4A1:
 			{
 				StopFirePrimary();
 			}
@@ -548,6 +558,12 @@ void AFPSCharacterBase::InputReload()
 			switch (ActiveWeapon)
 			{
 			case EWeaponType::AK47:
+				{
+					
+					ServerReloadPrimary();
+				}
+				break;
+			case EWeaponType::M4A1:
 				{
 					
 					ServerReloadPrimary();
@@ -647,12 +663,6 @@ void AFPSCharacterBase::PurChaseWeapon(EWeaponType WeaponType)
 			
 		}
 		break;
-	case  EWeaponType::DesertEagle:
-		{
-		
-			
-		}
-		break;
 		
 	default:
 		{
@@ -673,6 +683,11 @@ AWeaponBaseClient* AFPSCharacterBase::GetCurrentClintFPArmsWeaponActor()
 			return ClientPrimryWeapon;	
 		}
 		break;
+	case EWeaponType::M4A1:
+		{
+			return ClientPrimryWeapon;	
+		}
+		break;
 		
 	}
 
@@ -687,6 +702,11 @@ AWeaponBaseServer* AFPSCharacterBase::GetCurrentServerTPBodysWeaponActor()
 	{
 
 	case EWeaponType::AK47:
+		{
+			return ServerPrimryWeapon;	
+		}
+		break;
+	case EWeaponType::M4A1:
 		{
 			return ServerPrimryWeapon;	
 		}
@@ -761,14 +781,11 @@ void AFPSCharacterBase::FireWeaponPrimary()
 		{
 			ServerFireRifleWeapon(PlayerCamera->GetComponentLocation(),PlayerCamera->GetComponentRotation(),false);
 		}
-	
-	
+		
 		//客户端执行(墙体播放动画(done)，手臂播放动画(done)，播放射击声音(done)，应用屏幕抖动(done)，应用后座力，枪口闪光粒子效果(done))
 		//客户端 (十字线瞄准UI(done) 初始化UI(done)， 播放十字线瞄准扩散动画(done))
 		ClientFire();
 		ClientRecoil();
-		
-
 		
 		//开启计时器 每隔固定时间重新射击
 		if (ServerPrimryWeapon->IsAutoMatic)
@@ -779,7 +796,6 @@ void AFPSCharacterBase::FireWeaponPrimary()
 				true);
 			//连续射击系统开发
 			//UKismetSystemLibrary::PrintString(this,FString::Printf(TEXT("ServerPrimryWeapon->ClipCurrentAmmo:%d"),ServerPrimryWeapon->ClipCurrentAmmo));
-		
 			
 		}
 		
