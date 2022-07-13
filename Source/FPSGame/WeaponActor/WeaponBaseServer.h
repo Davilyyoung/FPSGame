@@ -14,8 +14,11 @@ enum class EWeaponType : uint8//缩小
 	//UMETAUMETA(DisplayName = "XXX"),可以在蓝图中被看到
 	AK47 UMETA(DisplayName = "AK47"),
 	M4A1 UMETA(DisplayName = "M4A1"),
+	MP7 UMETA(DisplayName = "MP7"),
 	DesertEagle UMETA(DisplayName = "DesertEagle"),
-
+	Sniper UMETA(DisplayName = "Sniper"),
+	EEND
+	
 };
 
 
@@ -54,52 +57,51 @@ public:
 	
 	UPROPERTY(EditAnywhere)
 	UParticleSystem* MuzzleFlash;
-	
 	UPROPERTY(EditAnywhere)
 	USoundBase* FireSound;
 
-	UPROPERTY(EditAnywhere)
-	int32 GunCurrentAmmo;//枪体现在还剩多少子弹
-	UPROPERTY(EditAnywhere,Replicated)//Replicated标识 如果服务器上改变了 客户端也要自动改变
-	int32 ClipCurrentAmmo;//弹夹里面还剩多少子弹
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere,Category="Bullet")
+	int32 CurrentGunAmmo;//枪体现在剩余多少子弹
+	UPROPERTY(EditAnywhere,Replicated,meta =(AllowPrivateAccess = "true"),Category="Bullet")//Replicated标识 如果服务器上改变了 客户端也要自动改变
+	int32 CurrentClipAmmo;//弹夹里面还剩多少子弹
+	UPROPERTY(EditAnywhere,Category= "Bullet")
 	int32 MaxClipAmmo;//弹夹容量
-
-	UPROPERTY(EditAnywhere)
-	UAnimMontage* ServerTPBodysShootAnimMontage;
-
-	UPROPERTY(EditAnywhere)
-	UAnimMontage* ServerTPBodysReloadAnimMontage;
-
-	UPROPERTY(EditAnywhere)
-	float BullerDistance;//子弹射击距离
-
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere,Category = "Bullet")
+	float ShootingDistance;//子弹射击距离
+	UPROPERTY(EditAnywhere,Category = "Bullet")
 	UMaterialInterface* BulletDecalMaterial;//子弹弹孔贴花
-
 	//基础伤害
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere,Category = "Bullet")
 	float BaseDamage;
-
+	
+	UPROPERTY(EditAnywhere,Category="TP_BodyAnimation")
+	UAnimMontage* ServerTPBodysShootAnimMontage;
+	UPROPERTY(EditAnywhere,Category="TP_BodyAnimation")
+	UAnimMontage* ServerTPBodysReloadAnimMontage;
+	
 	//是否可以连发
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere,Category="WeaponAuto?")
 	bool IsAutoMatic;
-
 	//连发的频率
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere,Category="WeaponAuto?")
 	float AutoMaticFireRate;
-
 	//曲线图
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere,Category="WeaponCurveData")
 	UCurveFloat* VerticalRecoilCurve;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere,Category="WeaponCurveData")
 	UCurveFloat* HorizontalRecoilCurve;
-
 	//跑动子弹偏移量
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere,Category="WeaponCurveData")
 	float MovingFireRandomRange;
-	
-	
+
+	//偏移频率
+	UPROPERTY(EditAnywhere,Category="SpreadWeaponData")
+	float SpreadWeaponCallBackRate;
+	UPROPERTY(EditAnywhere,Category="SpreadWeaponData")
+	float SpreadWeaponMinIndex;//手枪的后坐力算法 最小偏移
+	UPROPERTY(EditAnywhere,Category="SpreadWeaponData")
+	float SpreadWeaponMaxIndex;//手枪的后坐力算法 最大偏移;
+
 	//服务器多播
 	UFUNCTION(NetMulticast,Reliable,WithValidation)
 	void MultiShootingEffect();//调用用这个

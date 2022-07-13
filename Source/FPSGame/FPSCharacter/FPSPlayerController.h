@@ -34,6 +34,8 @@ public:
 	UFUNCTION(Category="PlayerUI",BlueprintImplementableEvent)
 	void UpdateHeathUI(float NewHealth);
 
-	
+	//蓝图里实现比较方便 失望方法
+	UFUNCTION(BlueprintImplementableEvent,Category="Heath")
+	void Death(AActor* DamageActor);
 };
 

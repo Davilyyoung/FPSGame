@@ -45,6 +45,10 @@ public:
 	//混合的动画是那个(数字)
 	UPROPERTY(EditAnywhere)
 	int32 FPArmsBlendPose;
-	
+
+	//开镜镜开多大
+	UPROPERTY(EditAnywhere)
+	float FieldAimingView;
+
 	void DisplayWeaponEffect();
 };
